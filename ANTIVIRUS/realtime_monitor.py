@@ -1,13 +1,3 @@
-#coding=utf-8
-# MIT License
-# Copyright (c) 2025 szeyui
-#
-# Trial Version Disclaimer:
-# This software is provided as a trial version for educational and testing purposes only.
-# It is provided "as is" without any warranty of any kind.
-# The developer shall not be held liable for any data loss, damage, or misuse resulting from the use of this software.
-# By using this software, you agree to the terms above.
-# You may not use this file except in compliance with the License.
 
 import os
 import time
@@ -273,4 +263,5 @@ def start_monitoring():
         logger.info("Monitoring stopped")
 
 if __name__ == "__main__":
+
     start_monitoring()
