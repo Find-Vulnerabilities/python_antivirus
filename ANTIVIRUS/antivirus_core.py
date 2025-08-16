@@ -808,28 +808,54 @@ rule Detect_Self_Modifying_Code_Improved
         """设置路径的安全权限 - 只允许SYSTEM和Administrators访问"""
         try:
             # 获取当前的安全描述符
-            sd = win32security.GetFileSecurity(path, win32security.DACL_SECURITY_INFORMATION)
-            
-            # 创建新的DACL
+            sd = win32security.GetFileSecurity(
+                path, 
+                win32security.DACL_SECURITY_INFORMATION
+            )
+        
+            # 建立新的 DACL
             dacl = win32security.ACL()
-            
-            # 添加SYSTEM完全控制
-            system_sid = win32security.CreateWellKnownSid(win32security.WinLocalSystemSid)
-            dacl.AddAccessAllowedAce(win32security.ACL_REVISION, con.FILE_ALL_ACCESS, system_sid)
-            
-            # 添加Administrators完全控制
-            admin_sid = win32security.CreateWellKnownSid(win32security.WinBuiltinAdministratorsSid)
-            dacl.AddAccessAllowedAce(win32security.ACL_REVISION, con.FILE_ALL_ACCESS, admin_sid)
-            
-            # 移除所有继承的ACE
-            sd.SetSecurityDescriptorControl(win32security.SE_DACL_PROTECTED, win32security.SE_DACL_PROTECTED)
-            
-            # 设置新的DACL
+        
+            # 添加 SYSTEM 完全控制
+            system_sid = win32security.CreateWellKnownSid(
+                win32security.WinLocalSystemSid
+            )
+            dacl.AddAccessAllowedAce(
+                win32security.ACL_REVISION, 
+                con.FILE_ALL_ACCESS, 
+                system_sid
+            )
+        
+            # 添加 Administrators 完全控制
+            admin_sid = win32security.CreateWellKnownSid(
+                win32security.WinBuiltinAdministratorsSid
+            )
+            dacl.AddAccessAllowedAce(
+                win32security.ACL_REVISION, 
+                con.FILE_ALL_ACCESS, 
+                admin_sid
+            )
+        
+            # 移除所有繼承的 ACE
+            sd.SetSecurityDescriptorControl(
+                win32security.SE_DACL_PROTECTED, 
+                win32security.SE_DACL_PROTECTED
+            )
+        
+            # 設定新的 DACL
             sd.SetSecurityDescriptorDacl(1, dacl, 0)
-            win32security.SetFileSecurity(path, win32security.DACL_SECURITY_INFORMATION, sd)
-            logger.info(f"Set secure permissions for {path}")
+            win32security.SetFileSecurity(
+                path, 
+                win32security.DACL_SECURITY_INFORMATION, 
+                sd
+            )
+            logger.info(f"設定安全權限: {path}")
+            return True
         except Exception as e:
-            logger.error(f"Failed to set secure permissions: {e}")
+            logger.error(f"設定安全權限失敗: {e}")
+            return False
+       
+        
 
     def quarantine_file(self, file_path, reason):
         """将文件移动到隔离区"""
@@ -2162,4 +2188,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = AntivirusGUI(root)
 
+    root.mainloop()
     root.mainloop()
