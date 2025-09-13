@@ -1,4 +1,3 @@
-
 import os
 import hashlib
 import time
@@ -58,17 +57,10 @@ DELETION_LOG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "del
 LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "antivirus.log")
 MAX_WORKERS = max(2, multiprocessing.cpu_count() - 1)
 
-# Whitelisted paths
-WHITELISTED_PATHS = [
-    r"C:\Windows\System32",
-    r"C:\Windows\SysWOW64",
-    r"C:\Program Files",
-    r"C:\Program Files (x86)",
-    r"C:\ProgramData",
-    r"C:\Windows\servicing",
-    r"C:\Program Files\Java",
+# Whitelisted SHA256 hashes
+WHITELISTED_HASHES = [
+    "ca8c0a2a00f1d6f6da076d1d61fa706e82df57ed2b12ae3b3c36f4f73556b2ec",
 ]
-WHITELISTED_PATHS = [p.lower() for p in WHITELISTED_PATHS]
 # ================================================
 
 # Configure logging
@@ -212,6 +204,9 @@ class AntivirusEngine:
             except Exception as e:
                 logger.error(f"Failed to load YARA rules: {e}")
                 self.yara_rule = None
+
+        # Initialize whitelisted hashes
+        self.whitelisted_hashes = set(WHITELISTED_HASHES)
 
     def _load_yara_rule(self):
         """Load YARA rules for various threat detection"""
@@ -930,14 +925,29 @@ rule Detect_Self_Modifying_Code_Improved
             return False
     
     
+    def add_to_whitelist(self, file_path):
+        """将文件SHA256加入白名单"""
+        file_hash = self.calculate_sha256(file_path)
+        if file_hash:
+            self.whitelisted_hashes.add(file_hash)
+            return True
+        return False
+
+    def remove_from_whitelist(self, file_path):
+        """将文件SHA256从白名单移除"""
+        file_hash = self.calculate_sha256(file_path)
+        if file_hash and file_hash in self.whitelisted_hashes:
+            self.whitelisted_hashes.remove(file_hash)
+            return True
+        return False
+
     def is_whitelisted(self, file_path):
-        """Check if file is in whitelisted path"""
+        """Check if file is whitelisted by SHA256 hash"""
         try:
-            file_path = os.path.abspath(file_path).lower()
-            for whitelist_path in WHITELISTED_PATHS:
-                if file_path.startswith(whitelist_path.lower()):
-                    return True
-            return False
+            file_hash = self.calculate_sha256(file_path)
+            if not file_hash:
+                return False
+            return file_hash in self.whitelisted_hashes
         except Exception as e:
             logger.error(f"Error checking whitelist for {file_path}: {e}")
             return False
