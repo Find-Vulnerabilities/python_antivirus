@@ -60,7 +60,24 @@ MAX_WORKERS = max(2, multiprocessing.cpu_count() - 1)
 # Whitelisted SHA256 hashes
 WHITELISTED_HASHES = [
     "ca8c0a2a00f1d6f6da076d1d61fa706e82df57ed2b12ae3b3c36f4f73556b2ec",
+    "fdb20300b1d03f27a9ae9e82f9f4c49d58efd558aeecb44aa8927964663b2d06",
+    "896e7edb5c8b1d6ab794427640ddeea33c1dded54469a0c2ce2aceb56f0c0408",
+    "3e641691c4d0b488df5a3b8ec926602950df7e06268ef8cb4fbfc54b0bcd26aa",
+    "036aff7f76e9573ee073a9422121a844ac32727754abf17510ec16568ede18b7",
+    "e698410e1b8e5b2875aa8b4d01fe6e4f0bf354f40d92925c4e3503d7fd1ec208",
+    "e05a0e0d87c0af1cbcb5d6da9477c673cf55b44a7916a6ebdc4f3ea1072bfb06",
+    "4f3adc5c61f88571cf20caaba5308eba9d1a9d944b22df24de3e31d6e31619ad",
+    "a2b580321650a9e249e253eff90096981876323fbbccd0436af173ad6759b3a1",
+    "69c8e5bbab050b271633dd64905a570e1806cbd0afd94e6b24a07b47dab43d64",
+    "c35dec015bae2369d278435f0ba3bd61445a9571b02136b39044712​​8054c0448",
+    "d8ee3eb9725b14981aeca1cb2e9e984d39d6e8c6f6cec7f8a6d1cd4b15f7b45b",
+    "522a918a423f6167e4f0a93b3b6dc06b43b53b6ce424a5345bdf56472b30eb31",
+    "7f59224522d2c8ebb0eb23598e0c3719385db417f0a5997defe7a6c6e52fbfd8",
+    "3fedf64d8e2fe8084fbf8d1eb5c1f93de75f321070f6cecfeaa7d8b4d79c16c7",
+    "5e97e7d15609fe298f87a8891e5f8ecc2bfd4e196531349a0b7145fab3dd9684",
+    "522a918a423f6167e4f0a93b3b6dc06b43b53b6ce424a5345bdf56472b30eb31",
 ]
+
 # ================================================
 
 # Configure logging
@@ -2200,3 +2217,4 @@ if __name__ == "__main__":
 
     root.mainloop()
     root.mainloop()
+
