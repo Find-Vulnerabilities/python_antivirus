@@ -76,6 +76,8 @@ WHITELISTED_HASHES = [
     "3fedf64d8e2fe8084fbf8d1eb5c1f93de75f321070f6cecfeaa7d8b4d79c16c7",
     "5e97e7d15609fe298f87a8891e5f8ecc2bfd4e196531349a0b7145fab3dd9684",
     "522a918a423f6167e4f0a93b3b6dc06b43b53b6ce424a5345bdf56472b30eb31",
+    "a7bd56874f1aee9d42805667581c48a7184c932428fca420742b306307d6e5c4",
+    "2d910cd17814c4718f7c6fd099232a70e8d38469efe6ccc414c6e956fd1c36fa",
 ]
 
 # ================================================
@@ -2217,4 +2219,5 @@ if __name__ == "__main__":
 
     root.mainloop()
     root.mainloop()
+
 
